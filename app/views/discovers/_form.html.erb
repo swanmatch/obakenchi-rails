@@ -1,0 +1,66 @@
+<%-
+only_show ||= false
+url =
+  if @discover.new_record?
+    discovers_path
+  else
+    discover_path(@discover)
+  end
+-%>
+<div class="card bg-light mb-3"><div class="card-body">
+  <%= simple_form_for(@discover, url: url) do |f| %>
+    <%= f.error_notification %>
+
+    <div class="form-inputs">
+      <div class="row">
+        <div class="col-md">
+          <%= f.input(
+            :obs_at,
+            disabled: only_show
+          ) %>
+        </div>
+        <div class="col-md">
+          <%= f.input(
+            :trigger,
+            disabled: only_show
+          ) %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md">
+          <%= f.input(
+            :human,
+            disabled: only_show
+          ) %>
+        </div>
+        <div class="col-md">
+          <%= f.input(
+            :magnetic_vol,
+            disabled: only_show
+          ) %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md">
+          <%= f.input(
+            :lumen_vol,
+            disabled: only_show
+          ) %>
+        </div>
+        <div class="col-md">
+          <%= f.input(
+            :temp_vol,
+            disabled: only_show
+          ) %>
+        </div>
+      </div>
+      <%= f.hidden_field :lock_version %>
+    </div>
+
+    <%- unless only_show -%>
+      <div class="form-actions row justify-content-around">
+        <%= f.button :submit, class: "btn btn-primary col-md-3 col-sm-5" %>
+      </div>
+    <%- end -%>
+  <% end %>
+</div></div>

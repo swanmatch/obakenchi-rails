@@ -1,0 +1,6 @@
+<%= render 'form', discover: @discover %>
+
+<div class="row justify-content-around">
+  <%= link_to '戻る', discovers_path, class: "btn btn-secondary col-md-2 col-sm-4" %>
+  <%= link_to '削除', discover_path(@discover), method: :delete, data: { confirm: '削除します。よろしいですか？' }, class: 'btn btn-danger col-md-2 col-sm-4'  %>
+</div>

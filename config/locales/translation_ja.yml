@@ -1,0 +1,49 @@
+ja:
+  activerecord:
+    models:
+      active_record/session_store/session: アクティブレコード/セッションストア/セッション  #g
+      session: セッション  #g
+      discover: 検知
+
+    attributes:
+      active_record/session_store/session:
+        data: データ  #g
+
+      session:
+        data: データ  #g
+
+      discover:
+        created_by: によって作成された  #g
+        deleted_at: で削除  #g
+        deleted_by: 削除者  #g
+        lock_version: ロックバージョン  #g
+        trigger: トリガー
+        updated_by: 更新者  #g
+        obs_at: 観測日次
+        human: 人感センサ
+        lumen_vol: 照度電圧
+        magnetic_vol: 磁気電圧
+        temp_vol: 温度電圧
+
+  activemodel:
+    attributes:
+      discover/search:
+        created_by: によって作成された  #g
+        deleted_at: で削除  #g
+        deleted_by: 削除者  #g
+        lock_version: ロックバージョン  #g
+        triggers: トリガー
+        updated_by: 更新者  #g
+        obs_at: 観測日次
+        human: 人感センサ
+        lumen_vol: 照度電圧
+        magnetic_vol: 磁気電圧
+        temp_vol: 温度電圧
+
+  enums:
+    discover:
+      trigger:
+        human: 人感センサー
+        magnetic: 磁気センサー
+        lumen: 照度センサー
+        temp: 温度センサー
