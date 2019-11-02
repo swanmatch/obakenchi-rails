@@ -78,4 +78,7 @@ namespace :yokai do
     end
 
   end
+  task console: :environment do
+    binding.pry
+  end
 end

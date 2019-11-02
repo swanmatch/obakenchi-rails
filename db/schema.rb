@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2019_10_29_045514) do
 
-  create_table "discovers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "discovers", force: :cascade do |t|
     t.datetime "obs_at"
     t.integer "trigger"
     t.boolean "human"
@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 2019_10_29_045514) do
     t.datetime "deleted_at"
   end
 
-  create_table "sessions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "sessions", force: :cascade do |t|
     t.string "session_id", null: false
     t.text "data"
     t.datetime "created_at", null: false

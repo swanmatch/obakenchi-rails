@@ -5,7 +5,13 @@
 <%= csrf_meta_tags %>
 
 <%= stylesheet_link_tag    'application', media: 'all', :'data-turbolinks-track' => 'reload' %>
-<%= javascript_include_tag 'application', :'data-turbolinks-track' => 'reload' %>
+
+<title>i2c-ADS1115</title>
+    <% if false%>
+    <script src="node_modules/@chirimen-raspi/polyfill/polyfill.js"></script>
+    <script src="node_modules/@chirimen-raspi/chirimen-driver-i2c-ads1x15/ADS1x15.js"></script>
+  <% end %>
+    <%= javascript_include_tag 'ADS1x15', 'polyfill', 'application', :'data-turbolinks-track' => 'reload' %>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
