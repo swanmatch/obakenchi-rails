@@ -4,13 +4,15 @@
 
 class Light
   def initialize
+    @gpio = PiPiper::Pin.new(pin: 6, direction: :out)
   end
 
-  ##TODO
   def on
     puts 'LED ON!!!'
+    @gpio.on
   end
   def off
     puts 'LED off...'
+    @gpio.off
   end
 end

@@ -1,33 +1,36 @@
     <!-- ????? -->
-    <div id="sensor">---</div>
+    <!-- <div id="sensor">aaa</div> -->
 
     <!-- ???????? -->
-    <table>
+    <table class="table table-striped table-bordered table-hover">
       <tr>
         <td>
-	  <a>???</a>
-	  <br />
+          <a>人感センサ</a>
+          <br />
+          <span id="sensor">---</span>
+        </td>
+        <td>
+          <a>磁気センサ</a>
+          <br />
           <span id="rawData0">init</span>
           <br />
           <span id="voltage0">init</span>
-	  <br />
-          <span id="camera0">init</span>
         </td>
         <td>
+          <a>光センサ</a>
+          <br />
           <span id="rawData1">init</span>
           <br />
           <span id="voltage1">init</span>
         </td>
         <td>
+          <a>温度センサ</a>
+          <br />
           <span id="rawData2">init</span>
           <br />
           <span id="voltage2">init</span>
         </td>
         <td>
-          <span id="rawData3">init</span>
-          <br />
-          <span id="voltage3">init</span>
-        </td>
       </tr>
 
       <tr></tr>
@@ -109,13 +112,13 @@
         <tbody>
           <% @discovers.each do |discover| %>
             <tr>
-              <td><%= discover.obs_at %></td>
+              <td><%= link_to discover.obs_at, "/photos/#{discover.obs_at.strftime('%Y%m%d_%H%M%S')}.jpg" %></td>
               <td><%= discover.trigger %></td>
               <td><%= discover.human %></td>
               <td><%= discover.magnetic_vol %></td>
               <td><%= discover.lumen_vol %></td>
               <td><%= discover.temp_vol %></td>
-              <td><%= link_to '編集', edit_discover_path(discover), class: 'btn btn-primary btn-block' %></td>
+              <td><%#= link_to '編集', edit_discover_path(discover), class: 'btn btn-primary btn-block' %></td>
             </tr>
           <% end %>
         </tbody>

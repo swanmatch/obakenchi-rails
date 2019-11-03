@@ -6,12 +6,14 @@ class AnalogCencer
     @name  = attrs[:name]
     @pin   = attrs[:pin]
     @index = attrs[:index]
+    `i2cset -y 1 0x48 1 0xC385 w`
   end
 
   # 電圧を取得
   def get_vol
-    ##TODO
-    self.vol= 2500 + (-250..250).to_a.sample
+    #self.vol= 2500 + (-500..500).to_a.sample
+    #puts @pin
+    self.vol= (`node ./node/index.js #{@pin}`.split("\n")[2].to_f * 1000 ).to_i
   end
 
   # 初回読込値をインスタンスに格納

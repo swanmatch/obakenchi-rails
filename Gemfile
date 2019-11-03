@@ -124,3 +124,5 @@ group :development, :test do
 end
 
 gem 'pi_piper'
+gem 'i2c'
+gem 'i2c-devices'

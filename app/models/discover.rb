@@ -17,7 +17,7 @@ class Discover < ApplicationRecord
         type_bool :human
 
     def search(page)
-      model = Discover.active
+      model = Discover.active.order(id: :desc)
 
       model = model.between(:obs_at, self.obs_at_from, self.obs_at_to)
 

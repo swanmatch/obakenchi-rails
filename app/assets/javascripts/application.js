@@ -49,5 +49,81 @@ $(document).on('turbolinks:load', function () {
   $('span.for-datepicker').on('click', function() {
     $(this).prev().focus();
   });
+
+  // Honoka Zone
+  var rawData = []; //そのままの値を渡すやつ
+  var voltage = []; //電圧を渡すやつ
+  var blr_voltage = [];
+  var now_voltage = [];
+  var temperature = 0;
+  var camera = [];
+  var camera_flag = [];
+
+  for (var i = 0; i < 3; i++) {
+    rawData[i] = document.getElementById("rawData" + i);
+    voltage[i] = document.getElementById("voltage" + i);
+    camera[i] = document.getElementById("camera" + i);
+    blr_voltage[i] = 0;
+  }
+  console.log("init0:", rawData, voltage);
+
+  main();
+
+  async function main() {
+  // Initialize WebI2C
+    var i2cAccess = await navigator.requestI2CAccess();
+    try {
+      //gpio ?????
+      var gpioAccess = await navigator.requestGPIOAccess();
+      var sensor = document.getElementById("sensor");
+      var dPort = gpioAccess.ports.get(5);
+      await dPort.export("in");
+
+      //i2c ???????????
+      var port = i2cAccess.ports.get(1);
+      var ads1115 = new ADS1x15(port, 0x48);
+      await ads1115.init(true);
+      console.log("new");
+
+      //while (1) {
+        try {
+        //?????
+         dPort.onchange = function(v) {
+           if (v === 1) {
+            sensor.innerHTML = "ON";
+          } else {
+            sensor.innerHTML = "OFF";
+          }
+        };
+
+        for (var i = 0; i < 3; i++) {
+          var value = await ads1115.read(i);
+          rawData[i].innerHTML = "ch" + i + ":" + value.toString(16);
+          if(i == 0){
+            voltage[i].innerHTML = (ads1115.getVoltage(value) * -10 + 500).toFixed(4) + "(V * 20)";
+            now_voltage[i] = (ads1115.getVoltage(value) * 20);
+          } else if(i == 2) {
+            voltage[i].innerHTML = (ads1115.getVoltage(value) * -10 + 40).toFixed(4) + "(℃)";
+            //now_voltage[i] = (ads1115.getVoltage(value) * 3);
+          } else {
+            voltage[i].innerHTML = ads1115.getVoltage(value).toFixed(4) + "(V)";
+            now_voltage[i] = (ads1115.getVoltage(value));
+          }
+          /*if( (now_voltage[i] - blf_voltage[i]) > 3 || (now_voltage[i] - blf_voltage[i] < -3) {
+            camera_flag[i]++;
+          }
+          blf_voltage[i] = now_voltage[i];
+          camera.HTML[i] = camera_flag[i];*/
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    //await sleep(2000);
+    //}
+  } catch (error) {
+    console.log("ADS1115.init error" + error);
+  }
+}
+  // Honoka ZoneEnd
 });
 

@@ -2,16 +2,16 @@ namespace :yokai do
   desc "センサーで監視"
   task watch: :environment do
     # 移動平均のサイズ
-    BUFFER_SIZE = 10
+    BUFFER_SIZE = 5
     # 磁気、照度、温度それぞれの変化のしきい値
-    SHOT_LINE = [50, 100, 10]
+    SHOT_LINE = [50, 200, 5]
     # 取得間隔
-    INTERVAL = 3
+    INTERVAL = 2
 
     # フラッシュ撮影
-    def ghost_baster(trigger, human_val, magnetic_vol, lumen_vol, temp_vol)
+    def ghost_baster(light, trigger, human_val, magnetic_vol, lumen_vol, temp_vol)
       obs_at = Time.now
-      light = Light.new
+      #light = Light.new
       light.on
       # DB登録
       Discover.create(
@@ -28,10 +28,11 @@ namespace :yokai do
     end
 
     human = HumanCencer.new
+    light = Light.new
     analog_cencers = [
-      AnalogCencer.new(name: :magnetic, pin: 4, index: 0),
-      AnalogCencer.new(name: :lumen,    pin: 5, index: 1),
-      AnalogCencer.new(name: :temp,     pin: 6, index: 2)
+      AnalogCencer.new(name: :magnetic, pin: 0, index: 0),
+      AnalogCencer.new(name: :lumen,    pin: 1, index: 1),
+      AnalogCencer.new(name: :temp,     pin: 2, index: 2)
     ]
 
     # 移動平均を算出するために、センサー数の空配列を作成
@@ -58,6 +59,7 @@ namespace :yokai do
           avr = buffers[i].sum / buffers[i].size
           # 撮影判定
           if SHOT_LINE[i] < (avr - cencer.vol).abs
+            puts "#{i}: #{avr - cencer.vol}"
             trigger ||= cencer.name
           end
           buffers[i].shift
@@ -68,10 +70,11 @@ namespace :yokai do
       # 判定
       if trigger
         Rails.logger.info 'Discover OBAKE!!'
-        ghost_baster(trigger, human.value, *buffers.map(&:last))
+        ghost_baster(light, trigger, human.value, *buffers.map(&:last))
         # バッファ初期化
         buffers = []
         analog_cencers.size.times{ buffers << [] }
+        trigger = false
       end
       p buffers
       sleep INTERVAL

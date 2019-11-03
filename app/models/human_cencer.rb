@@ -6,12 +6,12 @@ class HumanCencer
   attr_reader :value, :last_value
 
   def initialize
+    @gpio = PiPiper::Pin.new(pin: 5, direction: :in)
   end
 
   def get
-    ##TODO
-    @last_value = value
-    @value = [0,0,0,0,0,0,0,0,0,1].sample
+    @last_value = @value
+    @value = @gpio.read
   end
 
   def just_on?
